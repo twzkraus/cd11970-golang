@@ -2,6 +2,8 @@
 
 Basic REST API implemented with Golang
 
+Created for completion of Udacity Golang course (cd11970)
+
 | Method   | Path              | Description                  |
 | -------- | ----------------- | ---------------------------- |
 | `GET`    | `/customers`      | Get a list of all customers  |
