@@ -11,19 +11,23 @@ import (
 
 // define types
 type Customer struct {
-	Id        uint16 `json:"id"`
-	Name      string `json:"name"`
-	CompanyId uint16 `json:"companyId"`
-	Company   string `json:"company"`
-	Notes     string `json:"notes"`
+	Id			uint16	`json:"id"`
+	Name		string 	`json:"name"`
+	Role		string 	`json:"role"`
+	Email		string 	`json:"email"`
+	Phone		string 	`json:"phone"`
+	Contacted	bool 	`json:"contacted"`
+	CompanyId	uint16 	`json:"companyId"`
+	Company		string 	`json:"company"`
+	Notes		string 	`json:"notes"`
 }
 
 // mock "database" of customers
 var customers = map[string]Customer{
-	"1": { 1, "Turner Kraus", 1, "Udacity" , "Does not have a TV show" },
-	"2": { 2, "Stephen Colbert", 2, "Paramount", ""	},
-	"3": { 3, "Jimmy Fallon", 3, "NBC Universal", "" },
-	"4": { 4, "Seth Meyers", 3, "NBC Universal", ""	},
+	"1": { 1, "Turner Kraus", "Software Engineer", "turner.kraus@udacity.com", "408-555-1234", false, 1, "Udacity", "Does not have a TV show" },
+	"2": { 2, "Stephen Colbert", "Host", "stephen@paramount.com", "212-555-1234", true, 2, "Paramount", ""	},
+	"3": { 3, "Jimmy Fallon", "Host", "jimmy@nbc.com", "212-555-4321", true, 3, "NBC Universal", "" },
+	"4": { 4, "Seth Meyers", "Host", "seth@nbc.com", "212-555-5678", false, 3, "NBC Universal", ""	},
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
@@ -144,6 +148,20 @@ func replaceCustomerValues(existingCustomer, newCustomer Customer) Customer {
 	if newCustomer.Notes != "" {
 		updatedCustomer.Notes = newCustomer.Notes
 	}
+	if newCustomer.Role != "" {
+		updatedCustomer.Role = newCustomer.Role
+	}
+	if newCustomer.Email != "" {
+		updatedCustomer.Email = newCustomer.Email
+	}
+	if newCustomer.Phone != "" {
+		updatedCustomer.Phone = newCustomer.Phone
+	}
+	// Contacted is a one-way operation--once a customer has been contacted, they cannot be 'un-contacted'
+	if newCustomer.Contacted == true {
+		updatedCustomer.Contacted = newCustomer.Contacted
+	}
+
 
 	return updatedCustomer
 }
